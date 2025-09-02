@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "iot-pipeline"
+version = "0.1.0"
+description = "Pipeline de Dados com IoT e Docker"
+authors = ["ingridxisto <ingridxisto@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pandas = "^2.2.2"
+streamlit = "^1.38.0"
+plotly = "^5.24.1"
+sqlalchemy = "^2.0.20"
+psycopg2-binary = "^2.9.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
