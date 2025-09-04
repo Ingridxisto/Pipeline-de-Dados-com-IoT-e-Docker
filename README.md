@@ -14,6 +14,7 @@ Projeto_Pipeline_De_Dados_IOT
 |
 ├─ csv
 |   └─ IOT-temp.csv
+├─ docs
 ├─ pipeline_dados
 |   ├─ __init__.py
 |   ├─ create_views.py
