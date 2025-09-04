@@ -42,6 +42,8 @@ pip install pandas psycopg2-binary sqlalchemy streamlit plotly
 docker run --name postgres-iot -e POSTGRES_PASSWORD=12345 -e POSTGRES_DB=database -p 5432:5432 -d postgres
 ```
 
+![Container Docker rodando](docs/Container_Docker.png)
+
 #### 2. Criando a Tabela no PostgreSQL
 
 Execute o script `postgres_manager.py` para criar a tabela `iot_temp_log`:
@@ -76,34 +78,42 @@ Execute create_views.py para criar as views utilizadas no dashboard:
 
 ##### 1. Média de temperatura por local (In / Out)
 
-CREATE OR REPLACE VIEW avg_temp_por_local AS
-SELECT location, AVG(temperature) AS avg_temp
-FROM iot_temp_log
-GROUP BY location;
+```
+    CREATE OR REPLACE VIEW avg_temp_por_local AS
+    SELECT location, AVG(temperature) AS avg_temp
+    FROM iot_temp_log
+    GROUP BY location;
+```
 
 ##### 2. Leituras por hora do dia
 
-CREATE OR REPLACE VIEW leituras_por_hora AS
-SELECT EXTRACT(HOUR FROM noted_date) AS hora, COUNT(*) AS contagem
-FROM iot_temp_log
-GROUP BY EXTRACT(HOUR FROM noted_date)
-ORDER BY hora;
+```
+    CREATE OR REPLACE VIEW leituras_por_hora AS
+    SELECT EXTRACT(HOUR FROM noted_date) AS hora, COUNT(*) AS contagem
+    FROM iot_temp_log
+    GROUP BY EXTRACT(HOUR FROM noted_date)
+    ORDER BY hora;
+```
 
 ##### 3. Temperatura máxima e mínima por dia
 
-CREATE OR REPLACE VIEW temp_max_min_por_dia AS
-SELECT DATE(noted_date) AS data,
-       MAX(temperature) AS temp_max,
-       MIN(temperature) AS temp_min
-FROM iot_temp_log
-GROUP BY DATE(noted_date)
-ORDER BY data;
+```
+    CREATE OR REPLACE VIEW temp_max_min_por_dia AS
+    SELECT DATE(noted_date) AS data,
+        MAX(temperature) AS temp_max,
+        MIN(temperature) AS temp_min
+    FROM iot_temp_log
+    GROUP BY DATE(noted_date)
+    ORDER BY data;
+```
 
 ##### Executando:
 
 ```
 python pipeline_dados/create_views.py
 ```
+
+![Tabela no Dbeaver](docs/Tabela_Dbeaver.png)
 
 ## Dashboard Streamlit
 ##### 1. Executando
@@ -162,6 +172,8 @@ git push -u origin main
 ```
 
 ## Referências
+
+- Documentação Teórica: [docs/Documentacao_Pipeline_IoT.pdf](docs/)
 
 - CSV do Kaggle: [Temperature Readings: IoT Devices](https://www.kaggle.com/datasets/atulanandjha/temperature-readings-iot-devices)
 
